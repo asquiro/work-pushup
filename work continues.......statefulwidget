@@ -1,0 +1,89 @@
+import "package:flutter/material.dart";
+
+void main() {
+  runApp(MaterialApp(
+    title: "Exploring UI Widget",
+    home: generateList(),
+  ));
+}
+
+Widget generateList() {
+  var listView = ListView(children: <Widget>[
+    ListTile(
+      trailing: Icon(Icons.laptop),
+      leading: Icon(Icons.house),
+      subtitle: Icon(Icons.games_outlined),
+      title: Icon(Icons.umbrella),
+    )
+  ]);
+  return listView;
+}
+
+List<String> showListEle() {
+  var listItem = showListEle();
+  var listViewer = ListView.builder(itemBuilder: (context, index) {
+    return ListTile(
+      title: Text(listItem[index]),
+    );
+  });
+  return listItem;
+}
+
+class showState extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _showStateNes();
+  }
+}
+
+class _showStateNes extends State<showState> {
+  String cityName = "";
+  var _currencies = ["Rubbies", "Pounds", "dollars", "Others"];
+  var _currentItemValue = "Rubbies";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Showing Stateful Example",
+              style: TextStyle(
+                  decoration: TextDecoration.none,
+                  color: Colors.lightBlue,
+                  fontSize: 20)),
+        ),
+        body: Container(
+            color: Colors.yellow,
+            child: Column(children: <Widget>[
+              TextField(onSubmitted: (String userInput) {
+                setState(() {
+                  cityName = userInput;
+                });
+              }),
+              DropdownButton<String>(
+                items: _currencies.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (String newSelectedItem) {
+                  //write you code here
+                  _onDropDownItemSelected(newSelectedItem);
+                },
+                value: _currentItemValue,
+              ),
+              Text("my city name is $cityName",
+                  style: TextStyle(
+                    color: Colors.lime,
+                    decoration: TextDecoration.none,
+                    fontSize: 25.0,
+                  )),
+            ])));
+  }
+
+  void _onDropDownItemSelected(newSelectedItem) {
+    setState(() {
+      this._currentItemValue = newSelectedItem;
+    });
+  }
+}
